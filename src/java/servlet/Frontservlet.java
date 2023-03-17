@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import etu1883.frameworki.Mapping;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import etu1883.frameworki.Utilitaire;
+import java.util.HashMap;
 
 /**
  *
@@ -30,12 +32,15 @@ public class Frontservlet extends HttpServlet {
     
     */
     
+    HashMap<String,Mapping> MappingUrls;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             Utilitaire u=new Utilitaire();
             String[] decompo=u.decomposer(request);
+            String url=request.getPathInfo();
             for(int i=0;i<decompo.length;i++){
                 out.println(decompo[i]);
             }
