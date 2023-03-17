@@ -5,6 +5,8 @@
  */
 package etu1883.frameworki;
 
+import annotation.Myannotation;
+import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -12,9 +14,19 @@ import javax.servlet.http.HttpServletRequest;
  * @author ITU
  */
 public class Utilitaire {
-    public String[] decomposer(HttpServletRequest request){
-        String url=request.getPathInfo();  
+    
+    @Myannotation(value="decomposition")
+    public String[] decomposer(String url){
         String[] tableau=url.split("/");
         return tableau;
-    }   
+    }
+        
+    public String getAnnotation(String url){
+        String[] tableau=decomposer(url);
+        int indice=tableau.length-1;
+        if(indice>=0)
+            return tableau[indice];
+        return null;
+    }
+      
 }
