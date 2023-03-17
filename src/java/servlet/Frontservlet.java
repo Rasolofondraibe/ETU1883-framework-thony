@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import etu1883.frameworki.Utilitaire;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import traitment.Fonction;
 
 /**
  *
@@ -32,18 +35,28 @@ public class Frontservlet extends HttpServlet {
     
     */
     
-    HashMap<String,Mapping> MappingUrls;
+   HashMap<String,Mapping> MappingUrls;
 
+   public void init() throws ServletException{
+        String url = getServletContext().getRealPath("/");   
+        Fonction fonction=new Fonction();
+       try {    
+           MappingUrls=fonction.listeHashMapAllClass(url);
+       } catch (ClassNotFoundException ex) {
+           Logger.getLogger(Frontservlet.class.getName()).log(Level.SEVERE, null, ex);
+       }
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             Utilitaire u=new Utilitaire();
-            String[] decompo=u.decomposer(request);
             String url=request.getPathInfo();
-            for(int i=0;i<decompo.length;i++){
-                out.println(decompo[i]);
-            }
+            String annotation=u.getAnnotation(url);
+            Mapping mapping=MappingUrls.get(annotation);
+            out.println(annotation);
+            out.println(mapping.getClassname());
         }
     }
 
