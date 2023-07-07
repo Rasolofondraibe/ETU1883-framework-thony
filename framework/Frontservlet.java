@@ -57,12 +57,10 @@ public class Frontservlet extends HttpServlet {
 
         try (PrintWriter out = response.getWriter()) {
             Utilitaire u=new Utilitaire();
-            
-            String url=request.getPathInfo();
+            String url=request.getRequestURI();
 
             String urlQuery=request.getQueryString();   //url apres le ?
         
-
             String annotation=u.getAnnotation(url);
             Fonction fonction=new Fonction();
            
